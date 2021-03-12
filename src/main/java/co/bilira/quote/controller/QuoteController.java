@@ -15,6 +15,6 @@ public class QuoteController {
 	public @ResponseBody
 	QuoteResponseDto quote(@RequestBody QuoteRequestDto requestDto) {
 		// TODO:
-		return null;
+		return new QuoteResponseDto();
 	}
 }
