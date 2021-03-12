@@ -1,8 +1,10 @@
 package co.bilira.quote.controller;
 
+import co.bilira.quote.model.QuoteRequestDto;
 import co.bilira.quote.model.QuoteResponseDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class QuoteController {
 	@PostMapping(value = "/quote", produces = {"application/json"})
 	public @ResponseBody
-	QuoteResponseDto quote() {
+	QuoteResponseDto quote(@RequestBody QuoteRequestDto requestDto) {
 		// TODO:
 		return null;
 	}
