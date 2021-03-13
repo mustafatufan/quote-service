@@ -5,7 +5,7 @@ or sell a particular amount of a currency (the base currency) with another curre
 
 ## Route
 
-```shell
+```
 POST /quote
 ```
 
@@ -29,9 +29,9 @@ POST /quote
 
 ## Response Body
 
-- total (String): Total quantity of quote currency _- Note that it was String in the doc._
-- price (String): The per-unit cost of the base currency _- Note that it was String in the doc._
-- currency (String): The quote currency
+- **total** (String): Total quantity of quote currency _- Note that it was String in the doc._
+- **price** (String): The per-unit cost of the base currency _- Note that it was String in the doc._
+- **currency** (String): The quote currency
 
 ### Response Body Example
 
@@ -50,6 +50,10 @@ POST /quote
 ```
 https://api.tufan.ee/quote
 ```
+
+### Swagger
+
+#### [Link](http://api.tufan.ee/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/quote-controller/quote)
 
 ### cURL
 
