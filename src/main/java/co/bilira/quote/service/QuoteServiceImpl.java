@@ -14,11 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class QuoteServiceImpl implements QuoteService {
@@ -89,20 +85,6 @@ public class QuoteServiceImpl implements QuoteService {
 	}
 
 	private QuoteResponseDto calculateReverseQuote(QuoteRequestDto requestDto, Orderbook orderbook) {
-		Map<PriceType, List<Order>> reversePrices = new EnumMap<>(PriceType.class);
-		reversePrices.put(PriceType.asks, getReverseOrders(orderbook.getPrices().get(PriceType.bids)));
-		reversePrices.put(PriceType.bids, getReverseOrders(orderbook.getPrices().get(PriceType.asks)));
-		Orderbook reverseOrderbook = new Orderbook(orderbook.getQuoteCurrency(), orderbook.getBaseCurrency(), reversePrices);
-		return calculateQuote(requestDto, reverseOrderbook);
-	}
-
-	private List<Order> getReverseOrders(List<Order> orders) {
-		List<Order> reverseOrders = new ArrayList<>();
-		for (Order order : orders) {
-			BigDecimal reversePrice = BigDecimal.ONE.divide(order.getPrice(), 8, RoundingMode.HALF_UP);
-			BigDecimal reverseVolume = reversePrice.multiply(order.getVolume());
-			reverseOrders.add(new Order(reversePrice, reverseVolume));
-		}
-		return reverseOrders;
+		return calculateQuote(requestDto, Orderbook.reverseOrderbook(orderbook));
 	}
 }

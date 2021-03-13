@@ -17,11 +17,11 @@ public class FilledQuote {
 		for (Order order : orders) {
 			total = total.add(order.getPrice().multiply(order.getVolume()));
 		}
-		return total;
+		return total.stripTrailingZeros();
 	}
 
 	public BigDecimal getPrice() {
-		return getTotal().divide(getVolume(), 8, RoundingMode.HALF_UP);
+		return getTotal().divide(getVolume(), 16, RoundingMode.HALF_UP).stripTrailingZeros();
 	}
 
 	public BigDecimal getVolume() {
@@ -29,6 +29,6 @@ public class FilledQuote {
 		for (Order order : orders) {
 			volume = volume.add(order.getVolume());
 		}
-		return volume;
+		return volume.stripTrailingZeros();
 	}
 }
