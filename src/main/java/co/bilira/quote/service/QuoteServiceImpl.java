@@ -23,7 +23,12 @@ public class QuoteServiceImpl implements QuoteService {
 	private String orderbookUrl;
 
 	@Override
-	public QuoteResponseDto quote(QuoteRequestDto requestDto) throws IOException, NoMarketException {
+	public QuoteResponseDto quote(QuoteRequestDto requestDto) throws IOException, NoMarketException, InvalidAmountException {
+		if (requestDto.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+			String errorMessage = String.format("amount: %s is invalid. Should be bigger than 0.", requestDto.getAmount().toString());
+			throw new InvalidAmountException(errorMessage);
+		}
+
 		Orderbook orderbook = getOrderbook(requestDto.getBaseCurrency(), requestDto.getQuoteCurrency());
 		return getQuoteResponse(requestDto, orderbook);
 	}
