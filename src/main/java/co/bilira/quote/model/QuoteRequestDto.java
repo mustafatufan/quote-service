@@ -6,14 +6,26 @@ import java.math.BigDecimal;
 
 public class QuoteRequestDto {
 	@JsonProperty(value = "action", required = true)
-	QuoteAction action;
+	private QuoteAction action;
 
 	@JsonProperty(value = "base_currency", required = true)
-	String baseCurrency;
+	private String baseCurrency;
 
 	@JsonProperty(value = "quote_currency", required = true)
-	String quoteCurrency;
+	private String quoteCurrency;
 
 	@JsonProperty(value = "amount", required = true)
-	BigDecimal amount;
+	private BigDecimal amount;
+
+	public QuoteAction getAction() {
+		return this.action;
+	}
+
+	public String getBaseCurrency() {
+		return baseCurrency;
+	}
+
+	public String getQuoteCurrency() {
+		return quoteCurrency;
+	}
 }
