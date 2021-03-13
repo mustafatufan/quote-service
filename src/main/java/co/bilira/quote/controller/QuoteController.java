@@ -2,6 +2,7 @@ package co.bilira.quote.controller;
 
 import co.bilira.quote.model.QuoteRequestDto;
 import co.bilira.quote.model.QuoteResponseDto;
+import co.bilira.quote.service.NoMarketException;
 import co.bilira.quote.service.QuoteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class QuoteController {
 
 	@PostMapping(value = "/quote", produces = {"application/json"})
 	public @ResponseBody
-	QuoteResponseDto quote(@RequestBody QuoteRequestDto requestDto) throws IOException {
+	QuoteResponseDto quote(@RequestBody QuoteRequestDto requestDto) throws IOException, NoMarketException {
 		return quoteService.quote(requestDto);
 	}
 }

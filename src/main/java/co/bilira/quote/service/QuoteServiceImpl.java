@@ -23,12 +23,12 @@ public class QuoteServiceImpl implements QuoteService {
 	private String orderbookUrl;
 
 	@Override
-	public QuoteResponseDto quote(QuoteRequestDto requestDto) throws IOException {
+	public QuoteResponseDto quote(QuoteRequestDto requestDto) throws IOException, NoMarketException {
 		Orderbook orderbook = getOrderbook(requestDto.getBaseCurrency(), requestDto.getQuoteCurrency());
 		return getQuoteResponse(requestDto, orderbook);
 	}
 
-	private Orderbook getOrderbook(String baseCurrency, String quoteCurrency) throws IOException {
+	private Orderbook getOrderbook(String baseCurrency, String quoteCurrency) throws IOException, NoMarketException {
 		String actualBaseCurrency = baseCurrency;
 		String actualQuoteCurrency = quoteCurrency;
 		String url = getUrl(baseCurrency, quoteCurrency);
@@ -39,7 +39,9 @@ public class QuoteServiceImpl implements QuoteService {
 			actualBaseCurrency = quoteCurrency;
 			actualQuoteCurrency = baseCurrency;
 			if (!result.getBoolean("success")) {
-				// TODO: Throw no market exception
+				String market = String.format("%s/%s or %s/%s", baseCurrency, quoteCurrency, quoteCurrency, baseCurrency);
+				String message = String.format("There is no %s market.", market);
+				throw new NoMarketException(message);
 			}
 		}
 		JSONObject jsonObject = result.getJSONObject("result");

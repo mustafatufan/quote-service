@@ -6,5 +6,5 @@ import co.bilira.quote.model.QuoteResponseDto;
 import java.io.IOException;
 
 public interface QuoteService {
-	QuoteResponseDto quote(QuoteRequestDto requestDto) throws IOException;
+	QuoteResponseDto quote(QuoteRequestDto requestDto) throws IOException, NoMarketException;
 }
