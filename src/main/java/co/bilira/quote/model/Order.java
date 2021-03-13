@@ -4,12 +4,20 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Order implements Comparable<Order> {
-	BigDecimal price;
-	BigDecimal volume;
+	private BigDecimal price;
+	private BigDecimal volume;
 
 	public Order(BigDecimal price, BigDecimal volume) {
 		this.price = price;
 		this.volume = volume;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public BigDecimal getVolume() {
+		return volume;
 	}
 
 	@Override

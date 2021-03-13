@@ -28,4 +28,8 @@ public class QuoteRequestDto {
 	public String getQuoteCurrency() {
 		return quoteCurrency;
 	}
+
+	public BigDecimal getAmount() {
+		return this.amount;
+	}
 }

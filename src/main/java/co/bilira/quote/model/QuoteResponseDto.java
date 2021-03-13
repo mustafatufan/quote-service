@@ -6,15 +6,17 @@ import java.math.BigDecimal;
 
 public class QuoteResponseDto {
 	@JsonProperty(value = "total", required = true)
-	BigDecimal total;
+	private BigDecimal total;
 
 	@JsonProperty(value = "price", required = true)
-	BigDecimal price;
+	private BigDecimal price;
 
 	@JsonProperty(value = "currency", required = true)
-	String currency;
+	private String currency;
 
-	public QuoteResponseDto() {
-		// TODO: delete later
+	public QuoteResponseDto(BigDecimal total, BigDecimal price, String currency) {
+		this.total = total;
+		this.price = price;
+		this.currency = currency;
 	}
 }

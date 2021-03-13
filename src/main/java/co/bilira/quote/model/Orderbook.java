@@ -15,6 +15,19 @@ public class Orderbook {
 	private String quoteCurrency;
 	private Map<PriceType, List<Order>> prices = new EnumMap<>(PriceType.class);
 
+	public Orderbook(String baseCurrency, String quoteCurrency, Map<PriceType, List<Order>> prices) {
+		this.baseCurrency = baseCurrency;
+		this.quoteCurrency = quoteCurrency;
+		for (PriceType priceType : PriceType.values()) {
+			if (priceType.equals(PriceType.asks)) {
+				Collections.sort(prices.get(priceType));
+			} else {
+				Collections.sort(prices.get(priceType), Collections.reverseOrder());
+			}
+		}
+		this.prices = prices;
+	}
+
 	public Orderbook(String baseCurrency, String quoteCurrency, JSONObject jsonObject) {
 		this.baseCurrency = baseCurrency;
 		this.quoteCurrency = quoteCurrency;
