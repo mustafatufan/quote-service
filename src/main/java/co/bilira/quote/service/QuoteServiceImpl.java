@@ -68,17 +68,15 @@ public class QuoteServiceImpl implements QuoteService {
 	}
 
 	private QuoteResponseDto calculateQuote(QuoteRequestDto requestDto, Orderbook orderbook) {
-		List<Order> orders;
-		if (requestDto.getAction().equals(QuoteAction.buy)) {
-			orders = orderbook.getPrices().get(PriceType.asks);
-		} else {
-			orders = orderbook.getPrices().get(PriceType.bids);
-		}
+		List<Order> orders = selectAskOrBidPrices(requestDto, orderbook);
 		FilledQuote filledQuote = new FilledQuote();
 		for (Order order : orders) {
 			BigDecimal projectedFilling = filledQuote.getVolume().add(order.getVolume());
-			if (projectedFilling.compareTo(requestDto.getAmount()) <= 0) {
+			if (projectedFilling.compareTo(requestDto.getAmount()) < 0) {
 				filledQuote.addOrder(order);
+			} else if (projectedFilling.compareTo(requestDto.getAmount()) == 0) {
+				filledQuote.addOrder(order);
+				break;
 			} else {
 				BigDecimal leftoverVolume = order.getVolume().subtract(projectedFilling.subtract(requestDto.getAmount()));
 				filledQuote.addOrder(new Order(order.getPrice(), leftoverVolume));
@@ -86,6 +84,14 @@ public class QuoteServiceImpl implements QuoteService {
 			}
 		}
 		return new QuoteResponseDto(filledQuote.getTotal(), filledQuote.getPrice(), requestDto.getQuoteCurrency());
+	}
+
+	private List<Order> selectAskOrBidPrices(QuoteRequestDto requestDto, Orderbook orderbook) {
+		if (requestDto.getAction().equals(QuoteAction.buy)) {
+			return orderbook.getPrices().get(PriceType.asks);
+		} else {
+			return orderbook.getPrices().get(PriceType.bids);
+		}
 	}
 
 	private QuoteResponseDto calculateReverseQuote(QuoteRequestDto requestDto, Orderbook orderbook) {

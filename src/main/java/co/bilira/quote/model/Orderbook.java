@@ -83,7 +83,7 @@ public class Orderbook {
 	}
 
 	private static Order reverseOrder(Order order) {
-		BigDecimal reversePrice = BigDecimal.ONE.divide(order.getPrice(), 16, RoundingMode.HALF_UP);
+		BigDecimal reversePrice = BigDecimal.ONE.divide(order.getPrice(), 18, RoundingMode.HALF_UP);
 		BigDecimal reverseVolume = order.getPrice().multiply(order.getVolume());
 		return new Order(reversePrice, reverseVolume);
 	}

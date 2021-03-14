@@ -21,7 +21,7 @@ public class FilledQuote {
 	}
 
 	public BigDecimal getPrice() {
-		return getTotal().divide(getVolume(), 16, RoundingMode.HALF_UP).stripTrailingZeros();
+		return getTotal().divide(getVolume(), 18, RoundingMode.HALF_UP).stripTrailingZeros();
 	}
 
 	public BigDecimal getVolume() {

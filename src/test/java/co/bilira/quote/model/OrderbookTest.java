@@ -36,13 +36,13 @@ class OrderbookTest {
 		// Checks if first ask order becomes first bid order and it is correct.
 		Order expectedAskOrder = originalPrices.get(PriceType.asks).get(0);
 		Order actualBidOrder = reversedOrderbook.getPrices().get(PriceType.bids).get(0);
-		assertEquals(BigDecimal.ONE.divide(expectedAskOrder.getPrice(), 16, RoundingMode.HALF_UP), actualBidOrder.getPrice());
+		assertEquals(BigDecimal.ONE.divide(expectedAskOrder.getPrice(), 18, RoundingMode.HALF_UP), actualBidOrder.getPrice());
 		assertEquals(expectedAskOrder.getPrice().multiply(expectedAskOrder.getVolume()), actualBidOrder.getVolume());
 
 		// Checks if first bid order becomes first ask order and it is correct.
 		Order expectedBidOrder = originalPrices.get(PriceType.bids).get(0);
 		Order actualAskOrder = reversedOrderbook.getPrices().get(PriceType.asks).get(0);
-		assertEquals(BigDecimal.ONE.divide(expectedBidOrder.getPrice(), 16, RoundingMode.HALF_UP), actualAskOrder.getPrice());
+		assertEquals(BigDecimal.ONE.divide(expectedBidOrder.getPrice(), 18, RoundingMode.HALF_UP), actualAskOrder.getPrice());
 		assertEquals(expectedBidOrder.getPrice().multiply(expectedBidOrder.getVolume()), actualAskOrder.getVolume());
 	}
 
