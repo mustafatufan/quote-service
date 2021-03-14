@@ -49,7 +49,7 @@ class OrderbookTest {
 	private List<Order> generateOrders() {
 		List<Order> orders = new ArrayList<>();
 		for (int i = 0; i < (Math.random() * 9) + 1; i++) {
-			orders.add(new Order(new BigDecimal(Math.random() * 10000.0), new BigDecimal(Math.random() * 10000.0)));
+			orders.add(new Order(BigDecimal.valueOf(Math.random() * 10000.0), BigDecimal.valueOf(Math.random() * 10000.0)));
 		}
 		return orders;
 	}

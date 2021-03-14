@@ -72,14 +72,16 @@ public class QuoteServiceImpl implements QuoteService {
 		FilledQuote filledQuote = new FilledQuote();
 		for (Order order : orders) {
 			BigDecimal projectedFilling = filledQuote.getVolume().add(order.getVolume());
-			if (projectedFilling.compareTo(requestDto.getAmount()) < 0) {
+			int compareResult = projectedFilling.compareTo(requestDto.getAmount());
+			if (compareResult < 0) {
 				filledQuote.addOrder(order);
-			} else if (projectedFilling.compareTo(requestDto.getAmount()) == 0) {
-				filledQuote.addOrder(order);
-				break;
 			} else {
-				BigDecimal leftoverVolume = order.getVolume().subtract(projectedFilling.subtract(requestDto.getAmount()));
-				filledQuote.addOrder(new Order(order.getPrice(), leftoverVolume));
+				if (compareResult == 0) {
+					filledQuote.addOrder(order);
+				} else {
+					BigDecimal leftoverVolume = order.getVolume().subtract(projectedFilling.subtract(requestDto.getAmount()));
+					filledQuote.addOrder(new Order(order.getPrice(), leftoverVolume));
+				}
 				break;
 			}
 		}
