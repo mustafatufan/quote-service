@@ -1,8 +1,9 @@
-package co.bilira.quote.util;
+package co.bilira.quote.service;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,23 +14,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class HttpUtil {
+@Service
+public class ApiServiceImpl implements ApiService {
 
-	private static final Logger log = LoggerFactory.getLogger(HttpUtil.class);
+	private static final Logger log = LoggerFactory.getLogger(ApiServiceImpl.class);
 
-	private HttpUtil() {
-	}
-
-	private static String readAll(Reader rd) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		int cp;
-		while ((cp = rd.read()) != -1) {
-			sb.append((char) cp);
-		}
-		return sb.toString();
-	}
-
-	public static JSONObject readJsonFromUrl(String url) throws ConnectionUnavailableException {
+	@Override
+	public JSONObject readJsonFromUrl(String url) throws ConnectionUnavailableException {
 		try {
 			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
 			connection.setRequestProperty("User-Agent", "quote-service");
@@ -52,4 +43,12 @@ public class HttpUtil {
 		}
 	}
 
+	private String readAll(Reader rd) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		int cp;
+		while ((cp = rd.read()) != -1) {
+			sb.append((char) cp);
+		}
+		return sb.toString();
+	}
 }

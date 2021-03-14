@@ -1,4 +1,4 @@
-package co.bilira.quote.util;
+package co.bilira.quote.service;
 
 public class ConnectionUnavailableException extends Exception {
 	public ConnectionUnavailableException() {

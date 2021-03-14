@@ -2,7 +2,7 @@ package co.bilira.quote.controller;
 
 import co.bilira.quote.service.InvalidAmountException;
 import co.bilira.quote.service.NoMarketException;
-import co.bilira.quote.util.ConnectionUnavailableException;
+import co.bilira.quote.service.ConnectionUnavailableException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

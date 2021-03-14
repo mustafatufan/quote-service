@@ -5,7 +5,7 @@ import co.bilira.quote.model.QuoteResponseDto;
 import co.bilira.quote.service.InvalidAmountException;
 import co.bilira.quote.service.NoMarketException;
 import co.bilira.quote.service.QuoteService;
-import co.bilira.quote.util.ConnectionUnavailableException;
+import co.bilira.quote.service.ConnectionUnavailableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

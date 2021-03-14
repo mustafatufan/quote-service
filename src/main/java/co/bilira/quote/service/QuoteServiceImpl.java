@@ -7,8 +7,6 @@ import co.bilira.quote.model.PriceType;
 import co.bilira.quote.model.QuoteAction;
 import co.bilira.quote.model.QuoteRequestDto;
 import co.bilira.quote.model.QuoteResponseDto;
-import co.bilira.quote.util.ConnectionUnavailableException;
-import co.bilira.quote.util.HttpUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,12 @@ import java.util.List;
 
 @Service
 public class QuoteServiceImpl implements QuoteService {
+
+	private final ApiService apiService;
+
+	public QuoteServiceImpl(ApiService apiService) {
+		this.apiService = apiService;
+	}
 
 	@Value("${url.orderbook.ftx}")
 	private String orderbookUrl;
@@ -37,10 +41,10 @@ public class QuoteServiceImpl implements QuoteService {
 		String actualBaseCurrency = baseCurrency;
 		String actualQuoteCurrency = quoteCurrency;
 		String url = getUrl(baseCurrency, quoteCurrency);
-		JSONObject result = HttpUtil.readJsonFromUrl(url);
+		JSONObject result = apiService.readJsonFromUrl(url);
 		if (!result.getBoolean("success")) {
 			String reverseUrl = getUrl(quoteCurrency, baseCurrency);
-			result = HttpUtil.readJsonFromUrl(reverseUrl);
+			result = apiService.readJsonFromUrl(reverseUrl);
 			actualBaseCurrency = quoteCurrency;
 			actualQuoteCurrency = baseCurrency;
 			if (!result.getBoolean("success")) {
