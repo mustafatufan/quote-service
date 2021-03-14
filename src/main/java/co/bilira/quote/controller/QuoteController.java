@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
-
 @Controller
 @RequestMapping("/")
 public class QuoteController {
@@ -25,7 +23,7 @@ public class QuoteController {
 
 	@PostMapping(value = "/quote", produces = {"application/json"})
 	public @ResponseBody
-	QuoteResponseDto quote(@RequestBody QuoteRequestDto requestDto) throws IOException, NoMarketException, InvalidAmountException, ConnectionUnavailableException {
+	QuoteResponseDto quote(@RequestBody QuoteRequestDto requestDto) throws NoMarketException, InvalidAmountException, ConnectionUnavailableException {
 		return quoteService.quote(requestDto);
 	}
 }
