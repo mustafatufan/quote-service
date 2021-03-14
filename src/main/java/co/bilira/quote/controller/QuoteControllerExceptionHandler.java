@@ -2,6 +2,7 @@ package co.bilira.quote.controller;
 
 import co.bilira.quote.service.InvalidAmountException;
 import co.bilira.quote.service.NoMarketException;
+import co.bilira.quote.util.ConnectionUnavailableException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,11 @@ public class QuoteControllerExceptionHandler extends ResponseEntityExceptionHand
 	@ExceptionHandler({InvalidAmountException.class})
 	public ResponseEntity<String> throwInvalidAmountException(InvalidAmountException ex) {
 		return error(BAD_REQUEST, ex);
+	}
+
+	@ExceptionHandler({ConnectionUnavailableException.class})
+	public ResponseEntity<String> throwConnectionUnavailableException(ConnectionUnavailableException ex) {
+		return error(NOT_FOUND, ex);
 	}
 
 	private ResponseEntity<String> error(HttpStatus status, Exception ex) {

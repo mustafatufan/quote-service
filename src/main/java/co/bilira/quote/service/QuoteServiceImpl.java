@@ -7,12 +7,12 @@ import co.bilira.quote.model.PriceType;
 import co.bilira.quote.model.QuoteAction;
 import co.bilira.quote.model.QuoteRequestDto;
 import co.bilira.quote.model.QuoteResponseDto;
+import co.bilira.quote.util.ConnectionUnavailableException;
 import co.bilira.quote.util.HttpUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -23,9 +23,9 @@ public class QuoteServiceImpl implements QuoteService {
 	private String orderbookUrl;
 
 	@Override
-	public QuoteResponseDto quote(QuoteRequestDto requestDto) throws IOException, NoMarketException, InvalidAmountException {
+	public QuoteResponseDto quote(QuoteRequestDto requestDto) throws NoMarketException, InvalidAmountException, ConnectionUnavailableException {
 		if (requestDto.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
-			String errorMessage = String.format("amount: %s is invalid. Should be bigger than 0.", requestDto.getAmount().toString());
+			String errorMessage = String.format("Amount %s is invalid. It should be bigger than zero.", requestDto.getAmount().toString());
 			throw new InvalidAmountException(errorMessage);
 		}
 
@@ -33,7 +33,7 @@ public class QuoteServiceImpl implements QuoteService {
 		return getQuoteResponse(requestDto, orderbook);
 	}
 
-	private Orderbook getOrderbook(String baseCurrency, String quoteCurrency) throws IOException, NoMarketException {
+	private Orderbook getOrderbook(String baseCurrency, String quoteCurrency) throws NoMarketException, ConnectionUnavailableException {
 		String actualBaseCurrency = baseCurrency;
 		String actualQuoteCurrency = quoteCurrency;
 		String url = getUrl(baseCurrency, quoteCurrency);
@@ -62,11 +62,8 @@ public class QuoteServiceImpl implements QuoteService {
 		if (requestDto.getBaseCurrency().equals(orderbook.getBaseCurrency()) &&
 				requestDto.getQuoteCurrency().equals(orderbook.getQuoteCurrency())) {
 			return calculateQuote(requestDto, orderbook);
-		} else if (requestDto.getBaseCurrency().equals(orderbook.getQuoteCurrency()) &&
-				requestDto.getQuoteCurrency().equals(orderbook.getBaseCurrency())) {
-			return calculateReverseQuote(requestDto, orderbook);
 		} else {
-			return null;
+			return calculateReverseQuote(requestDto, orderbook);
 		}
 	}
 
