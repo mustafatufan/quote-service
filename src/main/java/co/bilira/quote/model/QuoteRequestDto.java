@@ -17,6 +17,13 @@ public class QuoteRequestDto {
 	@JsonProperty(value = "amount", required = true)
 	private BigDecimal amount;
 
+	public QuoteRequestDto(QuoteAction action, String baseCurrency, String quoteCurrency, BigDecimal amount) {
+		this.action = action;
+		this.baseCurrency = baseCurrency;
+		this.quoteCurrency = quoteCurrency;
+		this.amount = amount;
+	}
+
 	public QuoteAction getAction() {
 		return this.action;
 	}

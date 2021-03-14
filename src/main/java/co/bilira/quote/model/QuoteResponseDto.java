@@ -19,4 +19,16 @@ public class QuoteResponseDto {
 		this.price = price;
 		this.currency = currency;
 	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
 }

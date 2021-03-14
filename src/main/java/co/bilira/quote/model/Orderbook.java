@@ -50,7 +50,9 @@ public class Orderbook {
 			JSONArray array = jsonObject.getJSONArray(priceType.name());
 			for (int i = 0; i < array.length(); i++) {
 				JSONArray rawOrder = array.getJSONArray(i);
-				Order order = new Order(rawOrder.getBigDecimal(0), rawOrder.getBigDecimal(1));
+				BigDecimal price = BigDecimal.valueOf(rawOrder.getDouble(0));
+				BigDecimal volume = BigDecimal.valueOf(rawOrder.getDouble(1));
+				Order order = new Order(price, volume);
 				priceList.get(priceType).add(order);
 			}
 		}

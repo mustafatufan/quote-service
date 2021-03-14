@@ -24,7 +24,7 @@ public class QuoteServiceImpl implements QuoteService {
 	}
 
 	@Value("${url.orderbook.ftx}")
-	private String orderbookUrl;
+	private String orderbookUrl = "https://ftx.com/api/markets/%s/orderbook?depth=100";
 
 	@Override
 	public QuoteResponseDto quote(QuoteRequestDto requestDto) throws NoMarketException, InvalidAmountException, ConnectionUnavailableException {
