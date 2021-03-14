@@ -70,12 +70,14 @@ curl --location --request POST 'https://api.tufan.ee/quote' \
 
 ## TODOs
 
-##### 1. Test custom exceptions
+##### 1. Write more detailed tests in `QuoteServiceImplTest`
+
+##### 2. Test custom exceptions
 
 - `InvalidAmountException`
 - `NoMarketException`
 - `ConnectionUnavailableException`
 
-##### 2. Fix syntax of `PriceType` and `QuoteAction` enums
+##### 3. Fix syntax of `PriceType` and `QuoteAction` enums
 
 Enums should be uppercase.
