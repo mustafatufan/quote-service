@@ -15,7 +15,7 @@ public class Orderbook {
 
 	private final String baseCurrency;
 	private final String quoteCurrency;
-	private Map<PriceType, List<Order>> prices = new EnumMap<>(PriceType.class);
+	private final Map<PriceType, List<Order>> prices;
 
 	public Orderbook(String baseCurrency, String quoteCurrency, Map<PriceType, List<Order>> prices) {
 		this.baseCurrency = baseCurrency;
